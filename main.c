@@ -167,16 +167,16 @@ Image sepia(Image imageAux){
           pixel[1] = imageAux.pixel[x][j][1];
           pixel[2] = imageAux.pixel[x][j][2];
 
-          int p =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
-          int menor_r = (255 >  p) ? p : 255;
+          int pixelUnity =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
+          int menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
           imageAux.pixel[x][j][0] = menor_r;
 
-          p =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
-          menor_r = (255 >  p) ? p : 255;
+          pixelUnity =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
+          menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
           imageAux.pixel[x][j][1] = menor_r;
 
-          p =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
-          menor_r = (255 >  p) ? p : 255;
+          pixelUnity =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
+          menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
           imageAux.pixel[x][j][2] = menor_r;
       }
   }

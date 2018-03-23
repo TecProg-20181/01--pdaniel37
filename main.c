@@ -28,21 +28,6 @@ int main() {
     return 0;
 }
 
-int max(int a, int b) {
-    if (a > b)
-        return a;
-    return b;
-}
-
-int same_pixel(Pixel p1, Pixel p2) {
-    if (p1.red == p2.red &&
-        p1.green == p2.green &&
-        p1.blue == p2.blue)
-        return 1;
-    return 0;
-}
-
-
 Image gray_scale(Image imageAux) {
 
     for (unsigned int i = 0; i < imageAux.height; ++i) {

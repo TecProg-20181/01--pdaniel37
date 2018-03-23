@@ -123,24 +123,22 @@ Image invert_colors(Image imageAux) {
 //Crop the image, the first two parameters are from the starting point and the next two are the size of the crop.
 Image crop_image(Image imageAux) {
     Image cropped;
-    cropped = imageAux;
 
-    int x, y;
-    scanf("%d %d", &x, &y);
-    int width, height;
-    scanf("%d %d", &width, &height);
+    int initialPointX, initialPointY;
+    scanf("%d %d", &initialPointX, &initialPointY);
+    int widthCrop, heightCrop;
+    scanf("%d %d", &widthCrop, &heightCrop);
 
-    cropped.width = width;
-    cropped.height = height;
+    cropped.width = widthCrop;
+    cropped.height = heightCrop;
 
-    for(int i = 0; i < height; ++i) {
-        for(int j = 0; j < width; ++j) {
-            cropped.pixel[i][j][0] = imageAux.pixel[i + y][j + x][0];
-            cropped.pixel[i][j][1] = imageAux.pixel[i + y][j + x][1];
-            cropped.pixel[i][j][2] = imageAux.pixel[i + y][j + x][2];
+    for(int column = 0; column < heightCrop; ++column) {
+        for(int row = 0; row < widthCrop; ++row) {
+            cropped.pixel[column][row][0] = imageAux.pixel[column + initialPointY][row + initialPointX][0];
+            cropped.pixel[column][row][1] = imageAux.pixel[column + initialPointY][row + initialPointX][1];
+            cropped.pixel[column][row][2] = imageAux.pixel[column + initialPointY][row + initialPointX][2];
         }
     }
-    printf("%d\t%d\t%d\t%d", imageAux.width, imageAux.height, cropped.width, cropped.height);
     return cropped;
 }
 

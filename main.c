@@ -44,15 +44,15 @@ int main() {
 //Aplly a gray scale
 Image gray_scale(Image imageAux) {
 
-    for (unsigned int i = 0; i < imageAux.height; ++i) {
-        for (unsigned int j = 0; j < imageAux.width; ++j) {
-            int media = imageAux.pixel[i][j][0] +
-                        imageAux.pixel[i][j][1] +
-                        imageAux.pixel[i][j][2];
+    for (unsigned int column = 0; column < imageAux.height; ++column) {
+        for (unsigned int row = 0; row < imageAux.width; ++row) {
+            int media = imageAux.pixel[column][row][0] +
+                        imageAux.pixel[column][row][1] +
+                        imageAux.pixel[column][row][2];
             media /= 3;
-            imageAux.pixel[i][j][0] = media;
-            imageAux.pixel[i][j][1] = media;
-            imageAux.pixel[i][j][2] = media;
+            imageAux.pixel[column][row][0] = media;
+            imageAux.pixel[column][row][1] = media;
+            imageAux.pixel[column][row][2] = media;
         }
     }
 

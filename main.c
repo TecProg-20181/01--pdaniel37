@@ -61,17 +61,17 @@ Image blur(Image imageAux) {
     int size_blur = 0;
     scanf("%d", &size_blur);
 
-    for (unsigned int i = 0; i < imageAux.height; ++i) {
-        for (unsigned int j = 0; j < imageAux.width; ++j) {
+    for (unsigned int column = 0; column < imageAux.height; ++column) {
+        for (unsigned int row = 0; row < imageAux.width; ++row) {
             Pixel media = {0, 0, 0};
 
-            int menor_h = (imageAux.height - 1 > i + size_blur/2) ? i + size_blur/2 : imageAux.height - 1;
-            int min_w = (imageAux.width - 1 > j + size_blur/2) ? j + size_blur/2 : imageAux.width - 1;
-            for(unsigned int columnAux = (0 > i - size_blur/2 ? 0 : i - size_blur/2); x <= menor_h; ++x) {
-                for(unsigned int y = (0 > j - size_blur/2 ? 0 : j - size_blur/2); y <= min_w; ++y) {
-                    media.red += imageAux.pixel[x][y][0];
-                    media.green += imageAux.pixel[x][y][1];
-                    media.blue += imageAux.pixel[x][y][2];
+            int menor_h = (imageAux.height - 1 > column + size_blur/2) ? column + size_blur/2 : imageAux.height - 1;
+            int min_w = (imageAux.width - 1 > row + size_blur/2) ? row + size_blur/2 : imageAux.width - 1;
+            for(unsigned int columnAux = (0 > column - size_blur/2 ? 0 : column - size_blur/2); columnAux <= menor_h; ++columnAux) {
+                for(unsigned int rowAux = (0 > row - size_blur/2 ? 0 : row - size_blur/2); rowAux <= min_w; ++rowAux) {
+                    media.red += imageAux.pixel[columnAux][rowAux][0];
+                    media.green += imageAux.pixel[columnAux][rowAux][1];
+                    media.blue += imageAux.pixel[columnAux][rowAux][2];
                 }
             }
 
@@ -79,9 +79,9 @@ Image blur(Image imageAux) {
             media.green /= size_blur * size_blur;
             media.blue /= size_blur * size_blur;
 
-            imageAux.pixel[i][j][0] = media.red;
-            imageAux.pixel[i][j][1] = media.green;
-            imageAux.pixel[i][j][2] = media.blue;
+            imageAux.pixel[column][row][0] = media.red;
+            imageAux.pixel[column][row][1] = media.green;
+            imageAux.pixel[column][row][2] = media.blue;
         }
     }
     return imageAux;
@@ -211,9 +211,9 @@ Image mirror(Image imageAux){
           imageAux.pixel[column][row][1] = imageAux.pixel[columnAux][rowAux][1];
           imageAux.pixel[column][row][2] = imageAux.pixel[columnAux][rowAux][2];
 
-          imageAux.pixel[columnAux][rowAux][0] = aux1.red;
-          imageAux.pixel[columnAux][rowAux][1] = aux1.green;
-          imageAux.pixel[columnAux][rowAux][2] = aux1.blue;
+          imageAux.pixel[columnAux][rowAux][0] = pixelAux.red;
+          imageAux.pixel[columnAux][rowAux][1] = pixelAux.green;
+          imageAux.pixel[columnAux][rowAux][2] = pixelAux.blue;
       }
   }
   return imageAux;

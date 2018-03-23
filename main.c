@@ -67,7 +67,7 @@ Image blur(Image imageAux) {
 
             int menor_h = (imageAux.height - 1 > i + size_blur/2) ? i + size_blur/2 : imageAux.height - 1;
             int min_w = (imageAux.width - 1 > j + size_blur/2) ? j + size_blur/2 : imageAux.width - 1;
-            for(unsigned int x = (0 > i - size_blur/2 ? 0 : i - size_blur/2); x <= menor_h; ++x) {
+            for(unsigned int columnAux = (0 > i - size_blur/2 ? 0 : i - size_blur/2); x <= menor_h; ++x) {
                 for(unsigned int y = (0 > j - size_blur/2 ? 0 : j - size_blur/2); y <= min_w; ++y) {
                     media.red += imageAux.pixel[x][y][0];
                     media.green += imageAux.pixel[x][y][1];
@@ -195,25 +195,25 @@ Image mirror(Image imageAux){
     height /= 2;
   }
 
-  for (int i2 = 0; i2 < height; ++i2) {
-      for (int j = 0; j < width; ++j) {
-          int x = i2, y = j;
+  for (int column = 0; column < height; ++column) {
+      for (int row = 0; row < width; ++row) {
+          int columnAux = column, rowAux = row;
 
-          if (horizontal == 1) y = imageAux.width - 1 - j;
-          else x = imageAux.height - 1 - i2;
+          if (horizontal == 1) rowAux = imageAux.width - 1 - row;
+          else columnAux = imageAux.height - 1 - column;
 
-          Pixel aux1;
-          aux1.red = imageAux.pixel[i2][j][0];
-          aux1.green = imageAux.pixel[i2][j][1];
-          aux1.blue = imageAux.pixel[i2][j][2];
+          Pixel pixelAux;
+          pixelAux.red = imageAux.pixel[column][row][0];
+          pixelAux.green = imageAux.pixel[column][row][1];
+          pixelAux.blue = imageAux.pixel[column][row][2];
 
-          imageAux.pixel[i2][j][0] = imageAux.pixel[x][y][0];
-          imageAux.pixel[i2][j][1] = imageAux.pixel[x][y][1];
-          imageAux.pixel[i2][j][2] = imageAux.pixel[x][y][2];
+          imageAux.pixel[column][row][0] = imageAux.pixel[columnAux][rowAux][0];
+          imageAux.pixel[column][row][1] = imageAux.pixel[columnAux][rowAux][1];
+          imageAux.pixel[column][row][2] = imageAux.pixel[columnAux][rowAux][2];
 
-          imageAux.pixel[x][y][0] = aux1.red;
-          imageAux.pixel[x][y][1] = aux1.green;
-          imageAux.pixel[x][y][2] = aux1.blue;
+          imageAux.pixel[columnAux][rowAux][0] = aux1.red;
+          imageAux.pixel[columnAux][rowAux][1] = aux1.green;
+          imageAux.pixel[columnAux][rowAux][2] = aux1.blue;
       }
   }
   return imageAux;

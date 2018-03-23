@@ -97,11 +97,11 @@ Image rotate90right(Image imageAux) {
     rotated.width = imageAux.height;
     rotated.height = imageAux.width;
 
-    for (unsigned int i = 0, y = 0; i < rotated.height; ++i, ++y) {
-        for (int j = rotated.width - 1, x = 0; j >= 0; --j, ++x) {
-            rotated.pixel[i][j][0] = imageAux.pixel[x][y][0];
-            rotated.pixel[i][j][1] = imageAux.pixel[x][y][1];
-            rotated.pixel[i][j][2] = imageAux.pixel[x][y][2];
+    for (unsigned int column = 0, columnMax = 0; column < rotated.height; ++column, ++columnMax) {
+        for (int row = rotated.width - 1, rowAux = 0; row >= 0; --row, ++rowAux) {
+            rotated.pixel[column][row][0] = imageAux.pixel[rowAux][columnMax][0];
+            rotated.pixel[column][row][1] = imageAux.pixel[rowAux][columnMax][1];
+            rotated.pixel[column][row][2] = imageAux.pixel[rowAux][columnMax][2];
         }
     }
 
@@ -110,11 +110,11 @@ Image rotate90right(Image imageAux) {
 
 //Invert colors of the image
 Image invert_colors(Image imageAux) {
-    for (unsigned int i = 0; i < imageAux.height; ++i) {
-        for (unsigned int j = 0; j < imageAux.width; ++j) {
-            imageAux.pixel[i][j][0] = 255 - imageAux.pixel[i][j][0];
-            imageAux.pixel[i][j][1] = 255 - imageAux.pixel[i][j][1];
-            imageAux.pixel[i][j][2] = 255 - imageAux.pixel[i][j][2];
+    for (unsigned int column = 0; column < imageAux.height; ++column) {
+        for (unsigned int row = 0; row < imageAux.width; ++row) {
+            imageAux.pixel[column][row][0] = 255 - imageAux.pixel[column][row][0];
+            imageAux.pixel[column][row][1] = 255 - imageAux.pixel[column][row][1];
+            imageAux.pixel[column][row][2] = 255 - imageAux.pixel[column][row][2];
         }
     }
     return imageAux;

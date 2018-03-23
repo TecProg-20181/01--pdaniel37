@@ -141,6 +141,30 @@ Image readImage(Image imageAux){
   return imageAux;
 }
 
+Image sepia(Image imageAux){
+  for (unsigned int x = 0; x < imageAux.height; ++x) {
+      for (unsigned int j = 0; j < imageAux.width; ++j) {
+          unsigned short int pixel[3];
+          pixel[0] = imageAux.pixel[x][j][0];
+          pixel[1] = imageAux.pixel[x][j][1];
+          pixel[2] = imageAux.pixel[x][j][2];
+
+          int p =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
+          int menor_r = (255 >  p) ? p : 255;
+          imageAux.pixel[x][j][0] = menor_r;
+
+          p =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
+          menor_r = (255 >  p) ? p : 255;
+          imageAux.pixel[x][j][1] = menor_r;
+
+          p =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
+          menor_r = (255 >  p) ? p : 255;
+          imageAux.pixel[x][j][2] = menor_r;
+      }
+  }
+  return imageAux;
+}
+
 Image menu(Image imageAux){
   int n_opcoes;
   scanf("%d", &n_opcoes);
@@ -150,32 +174,12 @@ Image menu(Image imageAux){
       scanf("%d", &opcao);
 
       switch(opcao) {
-          case 1: { // Escala de Cinza
+          case 1: { // Gray Scale
               imageAux = gray_scale(imageAux);
               break;
           }
-          case 2: { // Filtro Sepia
-              for (unsigned int x = 0; x < imageAux.height; ++x) {
-                  for (unsigned int j = 0; j < imageAux.width; ++j) {
-                      unsigned short int pixel[3];
-                      pixel[0] = imageAux.pixel[x][j][0];
-                      pixel[1] = imageAux.pixel[x][j][1];
-                      pixel[2] = imageAux.pixel[x][j][2];
-
-                      int p =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
-                      int menor_r = (255 >  p) ? p : 255;
-                      imageAux.pixel[x][j][0] = menor_r;
-
-                      p =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
-                      menor_r = (255 >  p) ? p : 255;
-                      imageAux.pixel[x][j][1] = menor_r;
-
-                      p =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
-                      menor_r = (255 >  p) ? p : 255;
-                      imageAux.pixel[x][j][2] = menor_r;
-                  }
-              }
-
+          case 2: { // Sepia Filter
+              imageAux = sepia(imageAux);
               break;
           }
           case 3: { // Blur
@@ -184,7 +188,7 @@ Image menu(Image imageAux){
               blur(imageAux.height, imageAux.pixel, tamanho, imageAux.width);
               break;
           }
-          case 4: { // Rotacao
+          case 4: { // Rotation
               int quantas_vezes = 0;
               scanf("%d", &quantas_vezes);
               quantas_vezes %= 4;

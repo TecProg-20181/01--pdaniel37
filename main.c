@@ -32,7 +32,7 @@ int pixel_igual(Pixel p1, Pixel p2) {
 }
 
 
-Image escala_de_cinza(Image image) {
+Image gray_scale(Image image) {
     /*for (unsigned int i = 0; i < image.height; ++i) {
         for (unsigned int j = 0; j < image.width; ++j) {
             print("%u", image.pixel[i][j][0] + image.pixel[i][j][1] + image.pixel[i][j][2]);
@@ -81,24 +81,24 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int size, 
     }
 }
 
-Image rotacionar90direita(Image image) {
-    Image rotacionada;
+Image rotate90right(Image image) {
+    Image rotated;
 
-    rotacionada.width = image.height;
-    rotacionada.height = image.width;
+    rotated.width = image.height;
+    rotated.height = image.width;
 
-    for (unsigned int i = 0, y = 0; i < rotacionada.height; ++i, ++y) {
-        for (int j = rotacionada.width - 1, x = 0; j >= 0; --j, ++x) {
-            rotacionada.pixel[i][j][0] = image.pixel[x][y][0];
-            rotacionada.pixel[i][j][1] = image.pixel[x][y][1];
-            rotacionada.pixel[i][j][2] = image.pixel[x][y][2];
+    for (unsigned int i = 0, y = 0; i < rotated.height; ++i, ++y) {
+        for (int j = rotated.width - 1, x = 0; j >= 0; --j, ++x) {
+            rotated.pixel[i][j][0] = image.pixel[x][y][0];
+            rotated.pixel[i][j][1] = image.pixel[x][y][1];
+            rotated.pixel[i][j][2] = image.pixel[x][y][2];
         }
     }
 
-    return rotacionada;
+    return rotated;
 }
 
-void inverter_cores(unsigned short int pixel[512][512][3],
+void invert_colors(unsigned short int pixel[512][512][3],
                     unsigned int width, unsigned int height) {
     for (unsigned int i = 0; i < height; ++i) {
         for (unsigned int j = 0; j < width; ++j) {
@@ -157,7 +157,7 @@ Image menu(Image imageAux){
 
       switch(opcao) {
           case 1: { // Escala de Cinza
-              imageAux = escala_de_cinza(imageAux);
+              imageAux = gray_scale(imageAux);
               break;
           }
           case 2: { // Filtro Sepia
@@ -195,7 +195,7 @@ Image menu(Image imageAux){
               scanf("%d", &quantas_vezes);
               quantas_vezes %= 4;
               for (int j = 0; j < quantas_vezes; ++j) {
-                  imageAux = rotacionar90direita(imageAux);
+                  imageAux = rotate90right(imageAux);
               }
               break;
           }
@@ -232,7 +232,7 @@ Image menu(Image imageAux){
               break;
           }
           case 6: { // Inversao de Cores
-              inverter_cores(imageAux.pixel, imageAux.width, imageAux.height);
+              invert_colors(imageAux.pixel, imageAux.width, imageAux.height);
               break;
           }
           case 7: { // Cortar Imagem
@@ -276,6 +276,6 @@ int main() {
     image = menu(image);
 
     printImage(image);
-    
+
     return 0;
 }

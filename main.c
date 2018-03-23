@@ -165,15 +165,51 @@ Image sepia(Image imageAux){
   return imageAux;
 }
 
+Image mirror(Image imageAux){
+  int horizontal = 0;
+  scanf("%d", &horizontal);
+
+  int width = imageAux.width, height = imageAux.height;
+
+  if (horizontal == 1){
+    width /= 2;
+  } else{
+    height /= 2;
+  }
+
+  for (int i2 = 0; i2 < height; ++i2) {
+      for (int j = 0; j < width; ++j) {
+          int x = i2, y = j;
+
+          if (horizontal == 1) y = imageAux.width - 1 - j;
+          else x = imageAux.height - 1 - i2;
+
+          Pixel aux1;
+          aux1.red = imageAux.pixel[i2][j][0];
+          aux1.green = imageAux.pixel[i2][j][1];
+          aux1.blue = imageAux.pixel[i2][j][2];
+
+          imageAux.pixel[i2][j][0] = imageAux.pixel[x][y][0];
+          imageAux.pixel[i2][j][1] = imageAux.pixel[x][y][1];
+          imageAux.pixel[i2][j][2] = imageAux.pixel[x][y][2];
+
+          imageAux.pixel[x][y][0] = aux1.red;
+          imageAux.pixel[x][y][1] = aux1.green;
+          imageAux.pixel[x][y][2] = aux1.blue;
+      }
+  }
+  return imageAux;
+}
+
 Image menu(Image imageAux){
-  int n_opcoes;
-  scanf("%d", &n_opcoes);
+  int n_options;
+  scanf("%d", &n_options);
 
-  for(int i = 0; i < n_opcoes; ++i) {
-      int opcao;
-      scanf("%d", &opcao);
+  for(int i = 0; i < n_options; ++i) {
+      int options;
+      scanf("%d", &options);
 
-      switch(opcao) {
+      switch(options) {
           case 1: { // Gray Scale
               imageAux = gray_scale(imageAux);
               break;
@@ -183,50 +219,22 @@ Image menu(Image imageAux){
               break;
           }
           case 3: { // Blur
-              int tamanho = 0;
-              scanf("%d", &tamanho);
-              blur(imageAux.height, imageAux.pixel, tamanho, imageAux.width);
+              int size_blur = 0;
+              scanf("%d", &size_blur);
+              blur(imageAux.height, imageAux.pixel, size_blur, imageAux.width);
               break;
           }
           case 4: { // Rotation
-              int quantas_vezes = 0;
-              scanf("%d", &quantas_vezes);
-              quantas_vezes %= 4;
-              for (int j = 0; j < quantas_vezes; ++j) {
+              int how_many_times = 0;
+              scanf("%d", &how_many_times);
+              how_many_times %= 4;
+              for (int j = 0; j < how_many_times; ++j) {
                   imageAux = rotate90right(imageAux);
               }
               break;
           }
-          case 5: { // Espelhamento
-              int horizontal = 0;
-              scanf("%d", &horizontal);
-
-              int width = imageAux.width, height = imageAux.height;
-
-              if (horizontal == 1) width /= 2;
-              else height /= 2;
-
-              for (int i2 = 0; i2 < height; ++i2) {
-                  for (int j = 0; j < width; ++j) {
-                      int x = i2, y = j;
-
-                      if (horizontal == 1) y = imageAux.width - 1 - j;
-                      else x = imageAux.height - 1 - i2;
-
-                      Pixel aux1;
-                      aux1.red = imageAux.pixel[i2][j][0];
-                      aux1.green = imageAux.pixel[i2][j][1];
-                      aux1.blue = imageAux.pixel[i2][j][2];
-
-                      imageAux.pixel[i2][j][0] = imageAux.pixel[x][y][0];
-                      imageAux.pixel[i2][j][1] = imageAux.pixel[x][y][1];
-                      imageAux.pixel[i2][j][2] = imageAux.pixel[x][y][2];
-
-                      imageAux.pixel[x][y][0] = aux1.red;
-                      imageAux.pixel[x][y][1] = aux1.green;
-                      imageAux.pixel[x][y][2] = aux1.blue;
-                  }
-              }
+          case 5: { // Mirroring
+              imageAux = mirror(imageAux);
               break;
           }
           case 6: { // Inversao de Cores

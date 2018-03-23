@@ -33,11 +33,6 @@ int pixel_igual(Pixel p1, Pixel p2) {
 
 
 Image gray_scale(Image image) {
-    /*for (unsigned int i = 0; i < image.height; ++i) {
-        for (unsigned int j = 0; j < image.width; ++j) {
-            print("%u", image.pixel[i][j][0] + image.pixel[i][j][1] + image.pixel[i][j][2]);
-        }
-    }*/
 
     for (unsigned int i = 0; i < image.height; ++i) {
         for (unsigned int j = 0; j < image.width; ++j) {
@@ -59,17 +54,16 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int size, 
         for (unsigned int j = 0; j < width; ++j) {
             Pixel media = {0, 0, 0};
 
-            unsigned long int menor_h = (height - 1 > i + size/2) ? i + size/2 : height - 1;
-            unsigned long int min_w = (width - 1 > j + size/2) ? j + size/2 : width - 1;
-            for(int x = (0 > i - size/2 ? 0 : i - size/2); x <= menor_h; ++x) {
-                for(int y = (0 > j - size/2 ? 0 : j - size/2); y <= min_w; ++y) {
+            int menor_h = (height - 1 > i + size/2) ? i + size/2 : height - 1;
+            int min_w = (width - 1 > j + size/2) ? j + size/2 : width - 1;
+            for(unsigned int x = (0 > i - size/2 ? 0 : i - size/2); x <= menor_h; ++x) {
+                for(unsigned int y = (0 > j - size/2 ? 0 : j - size/2); y <= min_w; ++y) {
                     media.red += pixel[x][y][0];
                     media.green += pixel[x][y][1];
                     media.blue += pixel[x][y][2];
                 }
             }
 
-            // printf("%u", media.red)
             media.red /= size * size;
             media.green /= size * size;
             media.blue /= size * size;

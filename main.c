@@ -16,6 +16,7 @@ typedef struct _image {
     unsigned int height;
 } Image;
 
+//Functions prototypes
 Image menu(Image imageAux);
 Image gray_scale(Image imageAux);
 Image blur(Image imageAux);
@@ -40,6 +41,7 @@ int main() {
     return 0;
 }
 
+//Aplly a gray scale
 Image gray_scale(Image imageAux) {
 
     for (unsigned int i = 0; i < imageAux.height; ++i) {
@@ -57,6 +59,7 @@ Image gray_scale(Image imageAux) {
     return imageAux;
 }
 
+//Blur the image
 Image blur(Image imageAux) {
     int size_blur = 0;
     scanf("%d", &size_blur);
@@ -87,6 +90,7 @@ Image blur(Image imageAux) {
     return imageAux;
 }
 
+//Rotates 90 degrees to the right
 Image rotate90right(Image imageAux) {
     Image rotated;
 
@@ -104,6 +108,7 @@ Image rotate90right(Image imageAux) {
     return rotated;
 }
 
+//Invert colors of the image
 Image invert_colors(Image imageAux) {
     for (unsigned int i = 0; i < imageAux.height; ++i) {
         for (unsigned int j = 0; j < imageAux.width; ++j) {
@@ -115,6 +120,7 @@ Image invert_colors(Image imageAux) {
     return imageAux;
 }
 
+//Crop the image, the first two parameters are from the starting point and the next two are the size of the crop.
 Image crop_image(Image imageAux) {
     Image cropped;
     cropped = imageAux;
@@ -138,6 +144,7 @@ Image crop_image(Image imageAux) {
     return cropped;
 }
 
+//Upload image
 Image readImage(Image imageAux){
   // read type of image
   char p3[4];
@@ -159,6 +166,7 @@ Image readImage(Image imageAux){
   return imageAux;
 }
 
+//Aplly a sepia filter
 Image sepia(Image imageAux){
   for (unsigned int column = 0; column < imageAux.height; ++column) {
       for (unsigned int row = 0; row < imageAux.width; ++row) {
@@ -183,6 +191,7 @@ Image sepia(Image imageAux){
   return imageAux;
 }
 
+//Mirror the image, the degree of horizontal inclination must be reported.
 Image mirror(Image imageAux){
   int horizontal = 0;
   scanf("%d", &horizontal);
@@ -219,6 +228,7 @@ Image mirror(Image imageAux){
   return imageAux;
 }
 
+//Program menu
 Image menu(Image imageAux){
   int n_options;
   scanf("%d", &n_options);
@@ -267,6 +277,7 @@ Image menu(Image imageAux){
   return imageAux;
 }
 
+//Prints the image at * .ppm.
 void printImage(Image imageAux){
   // print type of image
   printf("P3\n");

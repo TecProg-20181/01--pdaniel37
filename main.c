@@ -1,4 +1,8 @@
 #include <stdio.h>
+#define R 0
+#define G 1
+#define B 2
+
 
 typedef struct _pixel {
     unsigned short int red;
@@ -46,13 +50,13 @@ Image gray_scale(Image imageAux) {
 
     for (unsigned int column = 0; column < imageAux.height; ++column) {
         for (unsigned int row = 0; row < imageAux.width; ++row) {
-            int media = imageAux.pixel[column][row][0] +
-                        imageAux.pixel[column][row][1] +
-                        imageAux.pixel[column][row][2];
+            int media = imageAux.pixel[column][row][R] +
+                        imageAux.pixel[column][row][G] +
+                        imageAux.pixel[column][row][B];
             media /= 3;
-            imageAux.pixel[column][row][0] = media;
-            imageAux.pixel[column][row][1] = media;
-            imageAux.pixel[column][row][2] = media;
+            imageAux.pixel[column][row][R] = media;
+            imageAux.pixel[column][row][G] = media;
+            imageAux.pixel[column][row][B] = media;
         }
     }
 
@@ -72,9 +76,9 @@ Image blur(Image imageAux) {
             int min_w = (imageAux.width - 1 > row + size_blur/2) ? row + size_blur/2 : imageAux.width - 1;
             for(unsigned int columnAux = (0 > column - size_blur/2 ? 0 : column - size_blur/2); columnAux <= menor_h; ++columnAux) {
                 for(unsigned int rowAux = (0 > row - size_blur/2 ? 0 : row - size_blur/2); rowAux <= min_w; ++rowAux) {
-                    media.red += imageAux.pixel[columnAux][rowAux][0];
-                    media.green += imageAux.pixel[columnAux][rowAux][1];
-                    media.blue += imageAux.pixel[columnAux][rowAux][2];
+                    media.red += imageAux.pixel[columnAux][rowAux][R];
+                    media.green += imageAux.pixel[columnAux][rowAux][G];
+                    media.blue += imageAux.pixel[columnAux][rowAux][B];
                 }
             }
 
@@ -82,9 +86,9 @@ Image blur(Image imageAux) {
             media.green /= size_blur * size_blur;
             media.blue /= size_blur * size_blur;
 
-            imageAux.pixel[column][row][0] = media.red;
-            imageAux.pixel[column][row][1] = media.green;
-            imageAux.pixel[column][row][2] = media.blue;
+            imageAux.pixel[column][row][R] = media.red;
+            imageAux.pixel[column][row][G] = media.green;
+            imageAux.pixel[column][row][B] = media.blue;
         }
     }
     return imageAux;
@@ -99,9 +103,9 @@ Image rotate90right(Image imageAux) {
 
     for (unsigned int column = 0, columnMax = 0; column < rotated.height; ++column, ++columnMax) {
         for (int row = rotated.width - 1, rowAux = 0; row >= 0; --row, ++rowAux) {
-            rotated.pixel[column][row][0] = imageAux.pixel[rowAux][columnMax][0];
-            rotated.pixel[column][row][1] = imageAux.pixel[rowAux][columnMax][1];
-            rotated.pixel[column][row][2] = imageAux.pixel[rowAux][columnMax][2];
+            rotated.pixel[column][row][R] = imageAux.pixel[rowAux][columnMax][R];
+            rotated.pixel[column][row][G] = imageAux.pixel[rowAux][columnMax][G];
+            rotated.pixel[column][row][B] = imageAux.pixel[rowAux][columnMax][B];
         }
     }
 
@@ -112,9 +116,9 @@ Image rotate90right(Image imageAux) {
 Image invert_colors(Image imageAux) {
     for (unsigned int column = 0; column < imageAux.height; ++column) {
         for (unsigned int row = 0; row < imageAux.width; ++row) {
-            imageAux.pixel[column][row][0] = 255 - imageAux.pixel[column][row][0];
-            imageAux.pixel[column][row][1] = 255 - imageAux.pixel[column][row][1];
-            imageAux.pixel[column][row][2] = 255 - imageAux.pixel[column][row][2];
+            imageAux.pixel[column][row][R] = 255 - imageAux.pixel[column][row][R];
+            imageAux.pixel[column][row][G] = 255 - imageAux.pixel[column][row][G];
+            imageAux.pixel[column][row][B] = 255 - imageAux.pixel[column][row][B];
         }
     }
     return imageAux;
@@ -134,9 +138,9 @@ Image crop_image(Image imageAux) {
 
     for(int column = 0; column < heightCrop; ++column) {
         for(int row = 0; row < widthCrop; ++row) {
-            cropped.pixel[column][row][0] = imageAux.pixel[column + initialPointY][row + initialPointX][0];
-            cropped.pixel[column][row][1] = imageAux.pixel[column + initialPointY][row + initialPointX][1];
-            cropped.pixel[column][row][2] = imageAux.pixel[column + initialPointY][row + initialPointX][2];
+            cropped.pixel[column][row][R] = imageAux.pixel[column + initialPointY][row + initialPointX][R];
+            cropped.pixel[column][row][G] = imageAux.pixel[column + initialPointY][row + initialPointX][G];
+            cropped.pixel[column][row][B] = imageAux.pixel[column + initialPointY][row + initialPointX][B];
         }
     }
     return cropped;
@@ -155,9 +159,9 @@ Image readImage(Image imageAux){
   // read all pixels of image
   for (unsigned int i = 0; i < imageAux.height; ++i) {
       for (unsigned int j = 0; j < imageAux.width; ++j) {
-          scanf("%hu %hu %hu", &imageAux.pixel[i][j][0],
-                               &imageAux.pixel[i][j][1],
-                               &imageAux.pixel[i][j][2]);
+          scanf("%hu %hu %hu", &imageAux.pixel[i][j][R],
+                               &imageAux.pixel[i][j][G],
+                               &imageAux.pixel[i][j][B]);
 
       }
   }
@@ -169,21 +173,21 @@ Image sepia(Image imageAux){
   for (unsigned int column = 0; column < imageAux.height; ++column) {
       for (unsigned int row = 0; row < imageAux.width; ++row) {
           unsigned short int pixel[3];
-          pixel[0] = imageAux.pixel[column][row][0];
-          pixel[1] = imageAux.pixel[column][row][1];
-          pixel[2] = imageAux.pixel[column][row][2];
+          pixel[R] = imageAux.pixel[column][row][R];
+          pixel[G] = imageAux.pixel[column][row][G];
+          pixel[B] = imageAux.pixel[column][row][B];
 
-          int pixelUnity =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
+          int pixelUnity =  pixel[R] * .393 + pixel[G] * .769 + pixel[B] * .189;
           int menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[column][row][0] = menor_r;
+          imageAux.pixel[column][row][R] = menor_r;
 
-          pixelUnity =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
+          pixelUnity =  pixel[R] * .349 + pixel[G] * .686 + pixel[B] * .168;
           menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[column][row][1] = menor_r;
+          imageAux.pixel[column][row][G] = menor_r;
 
-          pixelUnity =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
+          pixelUnity =  pixel[R] * .272 + pixel[G] * .534 + pixel[B] * .131;
           menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[column][row][2] = menor_r;
+          imageAux.pixel[column][row][B] = menor_r;
       }
   }
   return imageAux;
@@ -210,17 +214,17 @@ Image mirror(Image imageAux){
           else columnAux = imageAux.height - 1 - column;
 
           Pixel pixelAux;
-          pixelAux.red = imageAux.pixel[column][row][0];
-          pixelAux.green = imageAux.pixel[column][row][1];
-          pixelAux.blue = imageAux.pixel[column][row][2];
+          pixelAux.red = imageAux.pixel[column][row][R];
+          pixelAux.green = imageAux.pixel[column][row][G];
+          pixelAux.blue = imageAux.pixel[column][row][B];
 
-          imageAux.pixel[column][row][0] = imageAux.pixel[columnAux][rowAux][0];
-          imageAux.pixel[column][row][1] = imageAux.pixel[columnAux][rowAux][1];
-          imageAux.pixel[column][row][2] = imageAux.pixel[columnAux][rowAux][2];
+          imageAux.pixel[column][row][R] = imageAux.pixel[columnAux][rowAux][R];
+          imageAux.pixel[column][row][G] = imageAux.pixel[columnAux][rowAux][G];
+          imageAux.pixel[column][row][B] = imageAux.pixel[columnAux][rowAux][B];
 
-          imageAux.pixel[columnAux][rowAux][0] = pixelAux.red;
-          imageAux.pixel[columnAux][rowAux][1] = pixelAux.green;
-          imageAux.pixel[columnAux][rowAux][2] = pixelAux.blue;
+          imageAux.pixel[columnAux][rowAux][R] = pixelAux.red;
+          imageAux.pixel[columnAux][rowAux][G] = pixelAux.green;
+          imageAux.pixel[columnAux][rowAux][B] = pixelAux.blue;
       }
   }
   return imageAux;
@@ -285,9 +289,9 @@ void printImage(Image imageAux){
   // print pixels of image
   for (unsigned int i = 0; i < imageAux.height; ++i) {
       for (unsigned int j = 0; j < imageAux.width; ++j) {
-          printf("%hu %hu %hu ", imageAux.pixel[i][j][0],
-                                 imageAux.pixel[i][j][1],
-                                 imageAux.pixel[i][j][2]);
+          printf("%hu %hu %hu ", imageAux.pixel[i][j][R],
+                                 imageAux.pixel[i][j][G],
+                                 imageAux.pixel[i][j][B]);
 
       }
       printf("\n");

@@ -160,24 +160,24 @@ Image readImage(Image imageAux){
 }
 
 Image sepia(Image imageAux){
-  for (unsigned int x = 0; x < imageAux.height; ++x) {
-      for (unsigned int j = 0; j < imageAux.width; ++j) {
+  for (unsigned int column = 0; column < imageAux.height; ++column) {
+      for (unsigned int row = 0; row < imageAux.width; ++row) {
           unsigned short int pixel[3];
-          pixel[0] = imageAux.pixel[x][j][0];
-          pixel[1] = imageAux.pixel[x][j][1];
-          pixel[2] = imageAux.pixel[x][j][2];
+          pixel[0] = imageAux.pixel[column][row][0];
+          pixel[1] = imageAux.pixel[column][row][1];
+          pixel[2] = imageAux.pixel[column][row][2];
 
           int pixelUnity =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
           int menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[x][j][0] = menor_r;
+          imageAux.pixel[column][row][0] = menor_r;
 
           pixelUnity =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
           menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[x][j][1] = menor_r;
+          imageAux.pixel[column][row][1] = menor_r;
 
           pixelUnity =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
           menor_r = (255 >  pixelUnity) ? pixelUnity : 255;
-          imageAux.pixel[x][j][2] = menor_r;
+          imageAux.pixel[column][row][2] = menor_r;
       }
   }
   return imageAux;

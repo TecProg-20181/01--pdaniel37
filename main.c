@@ -16,6 +16,17 @@ typedef struct _image {
     unsigned int height;
 } Image;
 
+int main() {
+    Image image;
+
+    image = readImage(image);
+
+    image = menu(image);
+
+    printImage(image);
+
+    return 0;
+}
 
 int max(int a, int b) {
     if (a > b)
@@ -274,16 +285,4 @@ void printImage(Image imageAux){
       }
       printf("\n");
   }
-}
-
-int main() {
-    Image image;
-
-    image = readImage(image);
-
-    image = menu(image);
-
-    printImage(image);
-
-    return 0;
 }

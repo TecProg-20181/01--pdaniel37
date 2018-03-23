@@ -18,7 +18,7 @@ typedef struct _image {
 
 Image menu(Image imageAux);
 Image gray_scale(Image imageAux);
-void blur(unsigned int height, unsigned short int pixel[512][512][3], unsigned int width);
+Image blur(Image imageAux);
 Image rotate90right(Image imageAux);
 Image invert_colors(Image imageAux);
 Image crop_image(Image imageAux);
@@ -57,21 +57,21 @@ Image gray_scale(Image imageAux) {
     return imageAux;
 }
 
-void blur(unsigned int height, unsigned short int pixel[512][512][3], unsigned int width) {
+Image blur(Image imageAux) {
     int size_blur = 0;
     scanf("%d", &size_blur);
 
-    for (unsigned int i = 0; i < height; ++i) {
-        for (unsigned int j = 0; j < width; ++j) {
+    for (unsigned int i = 0; i < imageAux.height; ++i) {
+        for (unsigned int j = 0; j < imageAux.width; ++j) {
             Pixel media = {0, 0, 0};
 
-            int menor_h = (height - 1 > i + size_blur/2) ? i + size_blur/2 : height - 1;
-            int min_w = (width - 1 > j + size_blur/2) ? j + size_blur/2 : width - 1;
+            int menor_h = (imageAux.height - 1 > i + size_blur/2) ? i + size_blur/2 : imageAux.height - 1;
+            int min_w = (imageAux.width - 1 > j + size_blur/2) ? j + size_blur/2 : imageAux.width - 1;
             for(unsigned int x = (0 > i - size_blur/2 ? 0 : i - size_blur/2); x <= menor_h; ++x) {
                 for(unsigned int y = (0 > j - size_blur/2 ? 0 : j - size_blur/2); y <= min_w; ++y) {
-                    media.red += pixel[x][y][0];
-                    media.green += pixel[x][y][1];
-                    media.blue += pixel[x][y][2];
+                    media.red += imageAux.pixel[x][y][0];
+                    media.green += imageAux.pixel[x][y][1];
+                    media.blue += imageAux.pixel[x][y][2];
                 }
             }
 
@@ -79,11 +79,12 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], unsigned i
             media.green /= size_blur * size_blur;
             media.blue /= size_blur * size_blur;
 
-            pixel[i][j][0] = media.red;
-            pixel[i][j][1] = media.green;
-            pixel[i][j][2] = media.blue;
+            imageAux.pixel[i][j][0] = media.red;
+            imageAux.pixel[i][j][1] = media.green;
+            imageAux.pixel[i][j][2] = media.blue;
         }
     }
+    return imageAux;
 }
 
 Image rotate90right(Image imageAux) {
@@ -236,7 +237,7 @@ Image menu(Image imageAux){
               break;
           }
           case 3: { // Blur
-              blur(imageAux.height, imageAux.pixel, imageAux.width);
+              imageAux = blur(imageAux);
               break;
           }
           case 4: { // Rotation

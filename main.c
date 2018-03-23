@@ -16,6 +16,18 @@ typedef struct _image {
     unsigned int height;
 } Image;
 
+Image menu(Image imageAux);
+Image gray_scale(Image imageAux);
+void blur(unsigned int height, unsigned short int pixel[512][512][3], unsigned int width);
+Image rotate90right(Image imageAux);
+Image invert_colors(Image imageAux);
+Image crop_image(Image imageAux);
+Image readImage(Image imageAux);
+Image sepia(Image imageAux);
+Image mirror(Image imageAux);
+void printImage(Image imageAux);
+
+
 int main() {
     Image image;
 
@@ -91,15 +103,15 @@ Image rotate90right(Image imageAux) {
     return rotated;
 }
 
-void invert_colors(unsigned short int pixel[512][512][3],
-                    unsigned int width, unsigned int height) {
-    for (unsigned int i = 0; i < height; ++i) {
-        for (unsigned int j = 0; j < width; ++j) {
-            pixel[i][j][0] = 255 - pixel[i][j][0];
-            pixel[i][j][1] = 255 - pixel[i][j][1];
-            pixel[i][j][2] = 255 - pixel[i][j][2];
+Image invert_colors(Image imageAux) {
+    for (unsigned int i = 0; i < imageAux.height; ++i) {
+        for (unsigned int j = 0; j < imageAux.width; ++j) {
+            imageAux.pixel[i][j][0] = 255 - imageAux.pixel[i][j][0];
+            imageAux.pixel[i][j][1] = 255 - imageAux.pixel[i][j][1];
+            imageAux.pixel[i][j][2] = 255 - imageAux.pixel[i][j][2];
         }
     }
+    return imageAux;
 }
 
 Image crop_image(Image imageAux) {
@@ -241,7 +253,7 @@ Image menu(Image imageAux){
               break;
           }
           case 6: { // Invert Colors
-              invert_colors(imageAux.pixel, imageAux.width, imageAux.height);
+              imageAux = invert_colors(imageAux);
               break;
           }
           case 7: { // Crop Image

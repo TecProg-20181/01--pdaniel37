@@ -250,6 +250,24 @@ Image menu(Image imageAux){
   return imageAux;
 }
 
+void printImage(Image imageAux){
+  // print type of image
+  printf("P3\n");
+  // print width height and color of image
+  printf("%u %u\n255\n", imageAux.width, imageAux.height);
+
+  // print pixels of image
+  for (unsigned int i = 0; i < imageAux.height; ++i) {
+      for (unsigned int j = 0; j < imageAux.width; ++j) {
+          printf("%hu %hu %hu ", imageAux.pixel[i][j][0],
+                                 imageAux.pixel[i][j][1],
+                                 imageAux.pixel[i][j][2]);
+
+      }
+      printf("\n");
+  }
+}
+
 int main() {
     Image image;
 
@@ -257,20 +275,7 @@ int main() {
 
     image = menu(image);
 
-    // print type of image
-    printf("P3\n");
-    // print width height and color of image
-    printf("%u %u\n255\n", image.width, image.height);
-
-    // print pixels of image
-    for (unsigned int i = 0; i < image.height; ++i) {
-        for (unsigned int j = 0; j < image.width; ++j) {
-            printf("%hu %hu %hu ", image.pixel[i][j][0],
-                                   image.pixel[i][j][1],
-                                   image.pixel[i][j][2]);
-
-        }
-        printf("\n");
-    }
+    printImage(image);
+    
     return 0;
 }
